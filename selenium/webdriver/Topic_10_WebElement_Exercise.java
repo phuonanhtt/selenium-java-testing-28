@@ -36,7 +36,7 @@ public class Topic_10_WebElement_Exercise {
 		driver.manage().window().maximize();
 	}
 
-	//@Test
+	@Test
 	public void TC_01_Displayed() {
 		// truy cập
 		driver.get("https://automationfc.github.io/basic-form/index.html");
@@ -70,7 +70,7 @@ public class Topic_10_WebElement_Exercise {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void TC_02_Enabled() {
 		// truy cập
 		driver.get("https://automationfc.github.io/basic-form/index.html");
@@ -153,7 +153,7 @@ public class Topic_10_WebElement_Exercise {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void TC_03_Selected() {
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 		
@@ -296,7 +296,87 @@ public class Topic_10_WebElement_Exercise {
 	public void afterClass() {
 		driver.quit();
 	}
-
+	
+	@Test
+	public void Login_05_Empty_Email_Pass() {
+		driver.get("http://live.techpanda.org/");
+		
+		driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
+		sleepInSecond(2);
+		
+		// k nhập, click button
+		driver.findElement(By.id("send2")).click();
+		sleepInSecond(2);
+		
+		//verify
+		Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-required-entry-email']")).getText(), "This is a required field.");
+		Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-required-entry-pass']")).getText(), "This is a required field.");
+	}
+	
+	@Test
+	public void Login_06_Invalid_Email() {
+		driver.get("http://live.techpanda.org/");
+		
+		driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
+		sleepInSecond(2);
+		
+		// Nhập mail invalid
+		driver.findElement(By.id("email")).sendKeys("abc123@123.898");
+		
+		//nhập pass hơp lệ
+		driver.findElement(By.id("pass")).sendKeys("123456");
+		
+		// click button login
+		driver.findElement(By.id("send2")).click();
+		sleepInSecond(2);
+		
+		//verify
+		Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-validate-email-email']")).getText(), "Please enter a valid email address. For example johndoe@domain.com.");
+		
+	}
+	@Test
+	public void Login_07_Pass_Less_Than_6_Char() {
+		driver.get("http://live.techpanda.org/");
+		
+		driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
+		sleepInSecond(2);
+		
+		// Nhập mail valid
+		driver.findElement(By.id("email")).sendKeys("anhttp@email.com");
+		
+		//nhập pass hơp lệ
+		driver.findElement(By.id("pass")).sendKeys("12345");
+		
+		// click button login
+		driver.findElement(By.id("send2")).click();
+		sleepInSecond(2);
+		
+		//verify
+		Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-validate-password-pass']")).getText(), "Please enter 6 or more characters without leading or trailing spaces.");
+		
+	}
+	@Test
+	public void Login_08_Incorrect_Email_Pass() {
+		driver.get("http://live.techpanda.org/");
+		
+		driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
+		sleepInSecond(1);
+		
+		// Nhập mail valid
+		driver.findElement(By.id("email")).sendKeys("anhttp@email.com");
+		
+		//nhập pass hơp lệ
+		driver.findElement(By.id("pass")).sendKeys("123456");
+		
+		// click button login
+		driver.findElement(By.id("send2")).click();
+		sleepInSecond(1);
+		
+		//verify
+		Assert.assertEquals(driver.findElement(By.xpath("//li[@class='error-msg']//span")).getText(), "Invalid login or password.");
+		
+	}
+	
 	public void sleepInSecond(long timeInSecond) {
 		try {
 			Thread.sleep(timeInSecond * 1000);
