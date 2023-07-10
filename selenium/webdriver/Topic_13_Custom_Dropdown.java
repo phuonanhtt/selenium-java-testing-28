@@ -102,6 +102,9 @@ public class Topic_13_Custom_Dropdown {
 		driver.get("https://react.semantic-ui.com/maximize/dropdown-example-search-selection/");
 		selectItemInEditableDropDown("//input[@class='search']", "//div[@role='option']//span", "Belgium");
 		Assert.assertEquals(driver.findElement(By.cssSelector("div.divider.text")).getText(), "Belgium");
+		
+		selectItemInEditableDropDown("//input[@class='search']", "//div[@role='option']//span", "Albania");
+		Assert.assertEquals(driver.findElement(By.cssSelector("div.divider.text")).getText(), "Albania");
 	}
 
 	@AfterClass
@@ -151,8 +154,10 @@ public class Topic_13_Custom_Dropdown {
 	}
 	
 	public void selectItemInEditableDropDown(String xPathTextbox, String xPathChild, String expectedText) {
+		// clear edit box
+		driver.findElement(By.xpath(xPathTextbox)).clear();
 		// click vào 1 thẻ nào đó để cho nó xổ hết các item ra
-		driver.findElement(By.xpath(xPathTextbox)).sendKeys(expectedText);;
+		driver.findElement(By.xpath(xPathTextbox)).sendKeys(expectedText);
 		sleepInSecond(1);
 		
 		// chờ cho tất cả các item được load ra hết => trong vòng 30s
