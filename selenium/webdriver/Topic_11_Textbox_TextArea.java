@@ -23,7 +23,7 @@ public class Topic_11_Textbox_TextArea {
 	
 	// tạo biến random cho email
 	Random rand = new Random();
-	String emailAddress = "anhttp" + rand.nextInt(99999) + "@gmail.com";
+	String emailAddress;
 	
 	// khai báo các trường khác
 	String firstName;
