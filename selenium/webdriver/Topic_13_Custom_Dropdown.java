@@ -150,9 +150,9 @@ public class Topic_13_Custom_Dropdown {
 		// c2 Foreach
 	}
 	
-	public void selectItemInEditableDropDown(String xPathParent, String xPathChild, String expectedText) {
+	public void selectItemInEditableDropDown(String xPathTextbox, String xPathChild, String expectedText) {
 		// click vào 1 thẻ nào đó để cho nó xổ hết các item ra
-		driver.findElement(By.xpath(xPathParent)).sendKeys(expectedText);;
+		driver.findElement(By.xpath(xPathTextbox)).sendKeys(expectedText);;
 		sleepInSecond(1);
 		
 		// chờ cho tất cả các item được load ra hết => trong vòng 30s
