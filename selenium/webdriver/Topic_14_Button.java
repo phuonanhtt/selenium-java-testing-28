@@ -39,7 +39,7 @@ public class Topic_14_Button {
 	@Test
 	public void TC_01_Button() {
 		driver.get("https://www.fahasa.com/customer/account/create");
-		sleepInSecond(120);
+		sleepInSecond(3);
 		
 		// click tab đăng nhập
 		driver.findElement(By.cssSelector("li.popup-login-tab-login")).click();
@@ -54,16 +54,7 @@ public class Topic_14_Button {
 		// lấy ra mã màu của 1 element
 		// chrome/edge: rgb
 		// firefox: rgba
-		String loginButtonColor = driver.findElement(loginButton).getCssValue("background-color");
-		
-		// Chuyển từ rgb sang kiểu color
-		Color color = Color.fromString(loginButtonColor);
-		
-		// color có hàm chuyển qua hexa
-		// #c92127
-		// toUpperCase => viết hoa chữ cái
-		String loginButtonHex = color.asHex().toUpperCase();
-		Assert.assertEquals(loginButtonHex,"#E0E0E0");
+		Assert.assertTrue(driver.findElement(loginButton).getCssValue("background").contains("rgb(224, 224, 224)"));
 		
 		// nhập email/password
 		driver.findElement(By.id("login_username")).sendKeys("testButton@gmail.com");
@@ -73,6 +64,10 @@ public class Topic_14_Button {
 		Assert.assertTrue(driver.findElement(loginButton).isEnabled());
 		
 		// verify color button đăng nhập
+		// Chuyển từ rgb sang kiểu color
+		// color có hàm chuyển qua hexa
+		// #c92127
+		// toUpperCase => viết hoa chữ cái
 		Assert.assertEquals(Color.fromString(driver.findElement(loginButton).getCssValue("background-color")).asHex().toUpperCase(),"#C92127");
 	}
 
