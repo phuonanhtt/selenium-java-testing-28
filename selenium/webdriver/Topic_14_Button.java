@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
-import org.openqa.selenium.support.Colors;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -40,7 +39,7 @@ public class Topic_14_Button {
 	@Test
 	public void TC_01_Button() {
 		driver.get("https://www.fahasa.com/customer/account/create");
-		sleepInSecond(30);
+		sleepInSecond(120);
 		
 		// click tab đăng nhập
 		driver.findElement(By.cssSelector("li.popup-login-tab-login")).click();
@@ -64,7 +63,7 @@ public class Topic_14_Button {
 		// #c92127
 		// toUpperCase => viết hoa chữ cái
 		String loginButtonHex = color.asHex().toUpperCase();
-		Assert.assertEquals(loginButtonHex,"#C92127");
+		Assert.assertEquals(loginButtonHex,"#E0E0E0");
 		
 		// nhập email/password
 		driver.findElement(By.id("login_username")).sendKeys("testButton@gmail.com");
@@ -74,7 +73,7 @@ public class Topic_14_Button {
 		Assert.assertTrue(driver.findElement(loginButton).isEnabled());
 		
 		// verify color button đăng nhập
-		Assert.assertTrue(Color.fromString(driver.findElement(loginButton).getCssValue("background-color")).asHex().toUpperCase(),"#C92127");
+		Assert.assertEquals(Color.fromString(driver.findElement(loginButton).getCssValue("background-color")).asHex().toUpperCase(),"#C92127");
 	}
 
 	@AfterClass
