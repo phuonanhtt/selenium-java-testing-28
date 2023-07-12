@@ -1,8 +1,8 @@
-package webdriver;
+package javaSDET;
 
 import java.util.Random;
 
-public class Test01_Random {
+public class Topic_05_Random {
 	public static void main (String[] arhs) {
 		Random rand = new Random();
 		

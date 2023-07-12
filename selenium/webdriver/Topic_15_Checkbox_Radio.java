@@ -1,6 +1,5 @@
 package webdriver;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -157,7 +156,7 @@ public class Topic_15_Checkbox_Radio {
 		driver.get("https://tiemchungcovid19.gov.vn/portal/register-person");
 		
 		By registedRadio1 = By.xpath("//div[text()='Đăng ký cho người thân']/preceding-sibling::div/input");
-		By registedRadio2 = By.xpath("//div[text()='Đăng ký cho người thân']/preceding-sibling::div/div[@class='mat-radio-outer-circle']");
+//		By registedRadio2 = By.xpath("//div[text()='Đăng ký cho người thân']/preceding-sibling::div/div[@class='mat-radio-outer-circle']");
 		
 		// click vào đăng ký cho người thân
 //		driver.findElement(registedRadio2).click();
