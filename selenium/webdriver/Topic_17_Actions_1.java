@@ -86,8 +86,22 @@ public class Topic_17_Actions_1 {
 	}
 	
 	@Test
-	public void TC_03_() {
+	public void TC_03_Click_And_Hold() {
+		driver.get("https://automationfc.github.io/jquery-selectable/");
 		
+		// 1. click chuột trái vào số 1
+		// 2. vẫn giữ chuột trái
+		action.clickAndHold(driver.findElement(By.xpath("//li[text()='1']")))
+		
+		// 3. kéo chuột tới số kết thúc
+		.moveToElement(driver.findElement(By.xpath("//li[text()='4']")))
+		
+		// 4. nhả chuột trái ra
+		.release()
+		// thực thi các hành động trên
+		.perform();
+		
+		sleepInSecond(4);
 	}
 	
 	@Test
