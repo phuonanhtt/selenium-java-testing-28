@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -65,7 +66,7 @@ public class Topic_17_Actions {
 		
 	}
 	
-	//@Test
+	@Test
 	public void TC_02_ToolTip() {
 //		driver.get("http://www.myntra.com/");
 //		
@@ -91,7 +92,7 @@ public class Topic_17_Actions {
 		Assert.assertEquals(driver.findElement(By.xpath("//h1[text()='Terms and Conditions']")).getText(), "Terms and Conditions");
 	}
 	
-	//@Test
+	@Test
 	public void TC_03_Click_And_Hold() {
 		driver.get("https://automationfc.github.io/jquery-selectable/");
 		
@@ -130,7 +131,7 @@ public class Topic_17_Actions {
 		
 	}
 	
-	//@Test
+	@Test
 	public void TC_04_Click_And_Selected_Random() {
 		driver.get("https://automationfc.github.io/jquery-selectable/");
 
@@ -161,7 +162,7 @@ public class Topic_17_Actions {
 		List<WebElement> numberSelected = driver.findElements(By.cssSelector("ol#selectable>li.ui-selected"));
 		Assert.assertEquals(numberSelected.size(), 5);
 	}
-	//@Test
+	@Test
 	public void TC_05_Double_Click() {
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 		
@@ -179,7 +180,49 @@ public class Topic_17_Actions {
 		// verify
 		Assert.assertEquals(driver.findElement(By.cssSelector("p#demo")).getText(), "Hello Automation Guys!");
 	}
-
+	
+	@Test
+	public void TC_06_Right_Click() {
+		driver.get("http://swisnl.github.io/jQuery-contextMenu/demo.html");
+		
+		// click chuột phải
+		action.contextClick(driver.findElement(By.xpath("//span[text()='right click me']"))).perform();
+		sleepInSecond(2);
+		
+		// hover vào quit
+		action.moveToElement(driver.findElement(By.cssSelector("li.context-menu-icon-quit"))).perform();
+		sleepInSecond(3);
+		
+		// verify
+		Assert.assertTrue(driver.findElement(By.cssSelector("li.context-menu-icon-quit.context-menu-hover")).isDisplayed());
+		
+		// click quit
+		action.click(driver.findElement(By.cssSelector("li.context-menu-icon-quit"))).perform();
+		sleepInSecond(3);
+		
+		// accept alert
+		driver.switchTo().alert().accept();
+		sleepInSecond(3);
+		
+		// verify quit không được hiển thị
+		Assert.assertFalse(driver.findElement(By.cssSelector("li.context-menu-icon-quit")).isDisplayed());
+	}
+	
+	@Test
+	public void TC_07_Drag_Drop() {
+		driver.get("https://automationfc.github.io/kendo-drag-drop/");
+		
+		// drag/drop không nên làm auto 
+		// ngoài ra còn có: captcha / SMS / OTP / bar code / qr code / chart / canvas / face / google / game
+		action.dragAndDrop(driver.findElement(By.cssSelector("div#draggable")), driver.findElement(By.cssSelector("div#droptarget"))).perform();
+		sleepInSecond(2);
+		
+		// verify hiển thị
+		Assert.assertEquals(driver.findElement(By.cssSelector("div#droptarget")).getText(), "You did great!");
+		Assert.assertEquals(Color.fromString(driver.findElement(By.cssSelector("div#draggable")).getCssValue("background-color")).asHex(), "#03a9f4");
+		
+	}
+	
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
