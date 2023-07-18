@@ -41,7 +41,7 @@ public class Topic_19_Random_Popup {
 		driver.manage().window().maximize();
 	}
 
-	//@Test
+	@Test
 	public void TC_01_Random_Popup_In_HTML_Java() {
 		// mới mở page ra thì popup chưa có trong HTML
 		driver.get("https://www.javacodegeeks.com/");
@@ -110,6 +110,9 @@ public class Topic_19_Random_Popup {
 		driver.get("https://vnk.edu.vn/");
 		sleepInSecond(30);
 		
+//		// close mess
+//		driver.findElement(By.cssSelector("div[aria-label='đóng']")).click();
+		
 		By popup = By.cssSelector("div#tve_editor");
 		
 		List<WebElement> popupElement = driver.findElements(popup);
@@ -120,11 +123,40 @@ public class Topic_19_Random_Popup {
 		}
 		
 		Assert.assertFalse(driver.findElement(popup).isDisplayed());
+		
+		// click danh sach khoa hoc
+		driver.findElement(By.cssSelector("button.btn-danger")).click();
+		sleepInSecond(3);
+		
+		Assert.assertEquals(driver.getCurrentUrl(), "https://vnk.edu.vn/lich-khai-giang/");
 	}
 	
 	@Test
 	public void TC_03_() {
+		driver.get("https://dehieu.vn/");
+		sleepInSecond(10);
 		
+		By popup = By.cssSelector("div.popup-content");
+		
+		List<WebElement> popupElement = driver.findElements(popup);
+		
+		if (popupElement.size() > 0 && popupElement.get(0).isDisplayed()) {
+			// nhập thông tin hoặc close popup
+//			driver.findElement(By.cssSelector("input#popup-name")).sendKeys("anhttp");
+//			driver.findElement(By.cssSelector("input#popup-email")).sendKeys(email);
+//			driver.findElement(By.cssSelector("input#popup-phone")).sendKeys("0123456789");
+//			driver.findElement(By.cssSelector("button.submit-button")).click();
+			// đóng popup
+			driver.findElement(By.cssSelector("button#close-popup")).click();
+			
+			sleepInSecond(3);
+		}
+		
+		// k hiển thị popup
+		driver.findElement(By.xpath("//a[text()='Tất cả khóa học']")).click();
+		sleepInSecond(3);
+		
+		Assert.assertEquals(driver.getCurrentUrl(), "https://dehieu.vn/khoa-hoc");
 	}
 
 	@AfterClass
