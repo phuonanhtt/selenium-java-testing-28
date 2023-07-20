@@ -1,12 +1,15 @@
 package webdriver;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
@@ -37,10 +40,14 @@ public class Topic_23_Upload_File {
 		if (osName.contains("Mac")) { // Mac
 			System.setProperty("webdriver.gecko.driver", projectPath + "/browserDrivers/geckodriver");
 		} else { // Windows
+//			System.setProperty("webdriver.chrome.driver", projectPath + "\\browserDrivers\\chromedriver.exe");
 			System.setProperty("webdriver.gecko.driver", projectPath + "\\browserDrivers\\geckodriver.exe");
+//			System.setProperty("webdriver.edge.driver", projectPath + "\\browserDrivers\\msedgedriver.exe");
 		}
 
 		driver = new FirefoxDriver();
+//		driver = new ChromeDriver();
+//		driver = new EdgeDriver();
 		jsExecutor = (JavascriptExecutor) driver;
 		action = new Actions(driver);
 
@@ -53,31 +60,65 @@ public class Topic_23_Upload_File {
 		driver.get("https://blueimp.github.io/jQuery-File-Upload/");
 		
 		// upload file
-		WebElement uploadFile = driver.findElement(By.cssSelector("input[type='file']"));
+		By uploadFile = By.cssSelector("input[type='file']");
 		
 		// sendKey đường dẫn của file vào thẻ input có type=file
-		uploadFile.sendKeys(spacePath);
-		sleepInSecond(5);
+		driver.findElement(uploadFile).sendKeys(spacePath);
+		sleepInSecond(3);
+		driver.findElement(uploadFile).sendKeys(starPath);
+		sleepInSecond(3);
+		driver.findElement(uploadFile).sendKeys(treePath);
+		sleepInSecond(3);
 		
 		// verify file đã được upload
 		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + space + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + star + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + tree + "']")).isDisplayed());
 		
 		// click start
-		driver.findElement(By.cssSelector("table button.start")).click();
-		sleepInSecond(2);
+//		driver.findElement(By.cssSelector("table button.start")).click();
+		List<WebElement> startButton = driver.findElements(By.cssSelector("table button.start"));
+		
+		for (WebElement start : startButton) {
+			start.click();
+			sleepInSecond(3);
+		}
 		
 		// verify file upload thành công
 		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']/a[text()='" + space + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']/a[text()='" + star + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']/a[text()='" + tree + "']")).isDisplayed());
 		
 	}
 	
 	@Test
-	public void TC_02_() {
+	public void TC_02_Upload_Multiple_File() {
+		driver.get("https://blueimp.github.io/jQuery-File-Upload/");
+		// upload file
+		By uploadFile = By.cssSelector("input[type='file']");
 		
-	}
-	@Test
-	public void TC_03_() {
+		// sendKey đường dẫn của file vào thẻ input có type=file
+		driver.findElement(uploadFile).sendKeys(spacePath + "\n" + starPath + "\n" + treePath);
+		sleepInSecond(3);
 		
+		// verify file đã được upload
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + space + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + star + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + tree + "']")).isDisplayed());
+		
+		// tạo biến lưu tất cả button start
+		List<WebElement> startButton = driver.findElements(By.cssSelector("table button.start"));
+		
+		// click start từng file
+		for (WebElement start : startButton) {
+			start.click();
+			sleepInSecond(4);
+		}
+		
+		// verify file upload thành công
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']/a[text()='" + space + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']/a[text()='" + star + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']/a[text()='" + tree + "']")).isDisplayed());
 	}
 
 	@AfterClass
