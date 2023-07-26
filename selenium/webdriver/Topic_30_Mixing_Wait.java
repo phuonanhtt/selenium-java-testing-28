@@ -34,7 +34,6 @@ public class Topic_30_Mixing_Wait {
 		jsExecutor = (JavascriptExecutor) driver;
 		action = new Actions(driver);
 		
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 	}
 
@@ -91,25 +90,24 @@ public class Topic_30_Mixing_Wait {
 	
 	@Test
 	public void TC_04_Element_Not_Found_Implicit_Explicit() {
-//		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		explicitWait = new WebDriverWait(driver, 10);
 		
 		driver.get("https://www.facebook.com/");
 		// Mấu chốt: Luôn luôn ưu tiên ưu tiên implicit trước
 		// Tìm được element rồi mới làm gì thì làm
-		
-		// Implicit
-//		System.out.println("5 - Start time: " + getDateTimeNow());
-//		driver.findElement(By.cssSelector("input#automation"));
-//		System.out.println("5 - End time: " + getDateTimeNow());
+		// => khi có cả 2 thì sẽ fail từ implicit của findElement() trong hàm visibilityOfElementLocated()
 		
 		// explicit
 		// bị áp dụng cả 2 loại wait trong step này
 		// 10s của implicit cho findElement
-		// 10s của explicit cho điều kiện
+		// 5s của explicit cho điều kiện
+		// chạy gàn như song song (0.2->0.5s) dạng bất đồng bộ
 		System.out.println("6 - Start time: " + getDateTimeNow());
 		try {
 			explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input#automation")));
+			// chạy dạng đồng bộ, findElement sẽ chạy trước -> áp dụng implicit -> fail -> k đến được explicit
+			// explicitWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("input#automation"))));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
