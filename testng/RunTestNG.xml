@@ -1,40 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite parallel="false" name="Suite">
+<suite name="Suite" parallel="tests" thread-count="3">
 	<test name="Run on Firefox">
-		<!--		<groups>
-			<run>
-				<include name="user" />
-				<exclude name="pay" />
-			</run>
-		</groups>
--->
 		<classes>
-
-			<class name="parameter.ParamOptional" />
-
-			<!-- 
-			<methods>
-				<include name="TC_01" />
-				<include name="TC_02" />
-			</methods>
-			-->
-		</classes>
-
-	</test>
-	<!-- 	<test name="Run on Firefox">
-		<classes>
-			<class name="annotation.Topic_02_Annotations" />
-			<methods>
-				<include name="TC_01" />
-				<include name="TC_02" />
-			</methods>
+			<parameter name="browser" value="Firefox" />
+			<class name="parameter.MutilBrowser" />
 		</classes>
 	</test>
-	
+
 	<test name="Run on Chrome">
 		<parameter name="browser" value="Chrome" />
 		<classes>
-
 			<class name="parameter.MutilBrowser" />
 		</classes>
 	</test>
@@ -42,9 +17,8 @@
 	<test name="Run on Edge">
 		<parameter name="browser" value="Edge" />
 		<classes>
-
 			<class name="parameter.MutilBrowser" />
 		</classes>
 	</test>
-	-->
-</suite> 
+	
+</suite>
